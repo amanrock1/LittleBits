@@ -119,9 +119,25 @@ LittleBits/
 
 ---
 
+
+##  Highlights
+
+- Premium Glassmorphism UI
+- Dynamic Club Management
+- RSVP Event Registration
+- Activity Pass Verification
+- Student Dashboard
+- Authority Control Panel
+- Quick Demo Accounts
+- Toast Notification System
+- LocalStorage Persistence
+- Responsive Design
+- Pure HTML, CSS & JavaScript
+- No Framework Dependencies
+
 ---
 
-## 👨‍💻 Authors & Contributors
+##  Authors & Contributors
 
 <div align="center">
 
@@ -149,37 +165,8 @@ LittleBits/
 ---
 
 
-## 🌟 Highlights
 
-- Premium Glassmorphism UI
-- Dynamic Club Management
-- RSVP Event Registration
-- Activity Pass Verification
-- Student Dashboard
-- Authority Control Panel
-- Quick Demo Accounts
-- Toast Notification System
-- LocalStorage Persistence
-- Responsive Design
-- Pure HTML, CSS & JavaScript
-- No Framework Dependencies
-
----
-
-## 🚀 Future Enhancements
-
-- Backend Integration
-- Real Authentication
-- Cloud Database Support
-- QR-Based Event Entry
-- Club Analytics Dashboard
-- Certificate Generation
-- Progressive Web App Support
-- Dark / Light Theme Switching
-
----
-
-## 📜 License
+##  License
 
 This project is intended for educational, portfolio, and learning purposes.
 
