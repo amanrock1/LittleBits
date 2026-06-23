@@ -6,7 +6,7 @@ This project is built using vanilla **HTML5**, **CSS3**, and **ES6 JavaScript**,
 
 ---
 
-## ⚡ Core Features & Resolved Fixes
+##  Core Features & Resolved Fixes
 
 
 ### 1. Unified Architecture & Clean File Splitting
@@ -57,7 +57,7 @@ To keep files concise and maintainable, key modules are split into a clean two-p
 
 ---
 
-## ⚙️ Tech Stack
+##  Tech Stack
 
 | Layer | Details |
 |---|---|
@@ -90,7 +90,7 @@ This is a lightweight static site — no package managers or bundlers required.
 
 ---
 
-## 🌐 Demo Accounts Reference
+##  Demo Accounts Reference
 
 | Name | Email | Role | Permissions |
 |---|---|---|---|
@@ -100,7 +100,7 @@ This is a lightweight static site — no package managers or bundlers required.
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 LittleBits/
