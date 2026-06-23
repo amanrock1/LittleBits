@@ -119,11 +119,133 @@ LittleBits/
 
 ---
 
-##  Authors
+---
 
-| Name | GitHub | LinkedIn |
-|--------|--------|----------|
-| **Aman Prabhat** | https://github.com/amanrock1 | https://www.linkedin.com/in/aman-prabhat-b75735325/ |
-| **Shoubhik Bhattacharya** | https://github.com/Shoubhik95 | https://www.linkedin.com/in/shoubhik-bhattacharya-8b4099324/ |
+## 👨‍💻 Authors & Contributors
+
+<div align="center">
+
+<img src="./Author.svg" width="340" alt="Aman Prabhat Author Card">
+
+<br><br>
+
+<img src="./Contributorshoubhik.svg" width="340" alt="Shoubhik Contributor Card">
+
+</div>
+
+<br>
+
+<div align="center">
+
+### 🛠 Project Team
+
+| Role | Name | GitHub | LinkedIn |
+|------|------|--------|----------|
+| Author & Maintainer | Aman Prabhat | [@amanrock1](https://github.com/amanrock1) | [LinkedIn](https://www.linkedin.com/in/aman-prabhat-b75735325/) |
+| Contributor & Super Admin Systems | Shoubhik Bhattacharya | [@Shoubhik95](https://github.com/Shoubhik95) | [LinkedIn](https://www.linkedin.com/in/shoubhik-bhattacharya-8b4099324/) |
+
+</div>
 
 ---
+
+## 🤝 Contributing
+
+Contributions, UI improvements, accessibility enhancements, bug fixes, and feature suggestions are welcome.
+
+### Getting Started
+
+1. Fork the repository
+2. Create a new branch
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Add new feature"
+```
+
+4. Push to GitHub
+
+```bash
+git push origin feature/your-feature-name
+```
+
+5. Open a Pull Request
+
+---
+
+## 📂 Project Structure
+
+```text
+LittleBits/
+│
+├── Author.svg
+├── Contributorshoubhik.svg
+├── README.md
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   ├── db.js
+│   ├── db2.js
+│   ├── navbar.js
+│   ├── navbar2.js
+│   ├── admin.js
+│   └── admin2.js
+│
+├── public/
+│
+├── index.html
+├── clubs.html
+├── club-details.html
+├── events.html
+├── event-details.html
+├── dashboard.html
+├── admin.html
+│
+└── .gitignore
+```
+
+---
+
+## 🌟 Highlights
+
+- Premium Glassmorphism UI
+- Dynamic Club Management
+- RSVP Event Registration
+- Activity Pass Verification
+- Student Dashboard
+- Authority Control Panel
+- Quick Demo Accounts
+- Toast Notification System
+- LocalStorage Persistence
+- Responsive Design
+- Pure HTML, CSS & JavaScript
+- No Framework Dependencies
+
+---
+
+## 🚀 Future Enhancements
+
+- Backend Integration
+- Real Authentication
+- Cloud Database Support
+- QR-Based Event Entry
+- Club Analytics Dashboard
+- Certificate Generation
+- Progressive Web App Support
+- Dark / Light Theme Switching
+
+---
+
+## 📜 License
+
+This project is intended for educational, portfolio, and learning purposes.
+
+© 2026 LittleBits — Chapters & Exhibitions Hub
+
+Built with ❤️ by Aman Prabhat and contributions from Shoubhik Bhattacharya.
