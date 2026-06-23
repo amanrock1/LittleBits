@@ -148,35 +148,6 @@ LittleBits/
 
 ---
 
-## 🤝 Contributing
-
-Contributions, UI improvements, accessibility enhancements, bug fixes, and feature suggestions are welcome.
-
-### Getting Started
-
-1. Fork the repository
-2. Create a new branch
-
-```bash
-git checkout -b feature/your-feature-name
-```
-
-3. Commit your changes
-
-```bash
-git commit -m "Add new feature"
-```
-
-4. Push to GitHub
-
-```bash
-git push origin feature/your-feature-name
-```
-
-5. Open a Pull Request
-
----
-
 ## 📂 Project Structure
 
 ```text
