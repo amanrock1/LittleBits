@@ -148,40 +148,6 @@ LittleBits/
 
 ---
 
-## 📂 Project Structure
-
-```text
-LittleBits/
-│
-├── Author.svg
-├── Contributorshoubhik.svg
-├── README.md
-│
-├── css/
-│   └── style.css
-│
-├── js/
-│   ├── db.js
-│   ├── db2.js
-│   ├── navbar.js
-│   ├── navbar2.js
-│   ├── admin.js
-│   └── admin2.js
-│
-├── public/
-│
-├── index.html
-├── clubs.html
-├── club-details.html
-├── events.html
-├── event-details.html
-├── dashboard.html
-├── admin.html
-│
-└── .gitignore
-```
-
----
 
 ## 🌟 Highlights
 
