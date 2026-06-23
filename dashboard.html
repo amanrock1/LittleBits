@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard | LittleBits</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .dashboard-header {
+      padding: 24px;
+      border-radius: 16px;
+      margin-top: 48px;
+      margin-bottom: 48px;
+    }
+    .profile-avatar {
+      width: 64px;
+      height: 64px;
+      background: white;
+      color: black;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+    @media (min-width: 992px) {
+      .dashboard-grid { grid-template-columns: 2fr 1fr; }
+    }
+    .panel-header-label {
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+    .pass-item-card {
+      padding: 24px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    @media (min-width: 576px) {
+      .pass-item-card { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; }
+    }
+    .cert-item-card {
+      padding: 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    .badge-tile {
+      aspect-ratio: 1/1;
+      background: rgba(255,255,255,0.01);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: help;
+      position: relative;
+    }
+    .badge-tile:hover {
+      transform: scale(1.05);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .badge-tooltip {
+      position: absolute;
+      bottom: 105%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      padding: 8px;
+      font-size: 9px;
+      border-radius: 6px;
+      z-index: 50;
+      text-align: center;
+      display: none;
+    }
+    .badge-tile:hover .badge-tooltip {
+      display: block;
+    }
+    
+    /* Printable Certificate Frame styling */
+    .certificate-frame {
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 40px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    @media print {
+      body * { display: none !important; }
+      #cert-print-modal, #cert-print-modal * { display: block !important; }
+      .modal-backdrop { position: absolute; inset: 0; background: white; }
+      .certificate-frame { border: none; padding: 0; }
+      .modal-close, #print-actions { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Main Container -->
+  <main class="container">
+    
+    <!-- Profile header -->
+    <section class="dashboard-header glass-panel flex-between shadow-2xl">
+      <div style="display: flex; align-items: center; gap: 24px;">
+        <div id="avatar-initial" class="profile-avatar font-display">?</div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <h1 id="user-display-name" class="font-display font-bold text-white" style="font-size: 24px; letter-spacing: 0.02em;">...</h1>
+          <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--color-gray-500); display: flex; align-items: center; gap: 6px;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: white; animation: pulse 2s infinite;"></span>
+            Active Chapter Member
+          </span>
+        </div>
+      </div>
+
+      <!-- Streaks and Edit button -->
+      <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <button id="edit-profile-btn" class="glass-btn rounded-lg" style="padding: 12px 20px; font-size: 10px; font-weight: bold; text-transform: uppercase; cursor: pointer;">Edit Profile</button>
+        <div class="glass-panel" style="padding: 16px 24px; border-radius: 12px; border-color: rgba(255,255,255,0.05); background: rgba(255,255,255,0.01);">
+          <div style="font-size: 8px; font-weight: 800; text-transform: uppercase; color: var(--color-gray-500);">Exhibition Attendance</div>
+          <div id="user-streak-value" class="font-display font-bold text-white" style="font-size: 18px; margin-top: 4px;">0 SESSIONS</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main grid panels split -->
+    <section class="dashboard-grid">
+      <!-- Left Column -->
+      <div style="display: flex; flex-direction: column; gap: 48px;">
+        
+        <!-- Bookings -->
+        <div>
+          <h3 class="panel-header-label">Pass Registrations</h3>
+          <div id="registrations-list-placeholder" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Credentials -->
+        <div>
+          <h3 class="panel-header-label">Earned Credentials</h3>
+          <div id="credentials-grid-placeholder" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div style="display: flex; flex-direction: column; gap: 48px;">
+        <!-- Affiliations -->
+        <div class="glass-panel" style="padding: 24px; border-radius: 16px; display: flex; flex-direction: column; gap: 16px;">
+          <h3 class="stat-label font-display" style="font-weight: bold; font-size: 10px;">Chapter Affiliations</h3>
+          <div id="affiliations-list-placeholder" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Accolades -->
+        <div class="glass-panel" style="padding: 24px; border-radius: 16px; display: flex; flex-direction: column; gap: 16px;">
+          <h3 class="stat-label font-display" style="font-weight: bold; font-size: 10px;">Chapter Accolades</h3>
+          <div id="accolades-grid-placeholder" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Printable Certificate Modal -->
+  <div id="cert-print-modal" class="modal-backdrop" style="background: rgba(0,0,0,0.95);">
+    <div class="modal-content" style="max-width: 680px; background: white; color: black; border-radius: 8px; padding: 48px;">
+      <button id="cert-modal-close" class="modal-close" style="color: var(--color-gray-500);">✕</button>
+      
+      <!-- Certificate layout -->
+      <div class="certificate-frame">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <h2 class="font-editorial uppercase text-black font-semibold" style="font-size: 24px; letter-spacing: 0.05em;">Exhibition Record</h2>
+          <p id="cert-code-label" style="font-size: 9px; color: var(--color-gray-500); font-family: monospace;"></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <p style="font-size: 12px; font-style: italic; color: var(--color-gray-500);">This document verifies that</p>
+          <h3 id="cert-user-name" class="font-display font-bold text-black" style="font-size: 32px; text-decoration: underline; text-decoration-color: black; text-underline-offset: 6px;">...</h3>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; max-width: 480px; margin: 0 auto;">
+          <p style="font-size: 12px; color: var(--color-gray-600); line-height: 1.6; font-weight: 300;">
+            has successfully participated in the research symposium and completed the syllabus workshops convenors directed during
+          </p>
+          <h4 id="cert-event-title" class="font-editorial font-bold text-black" style="font-size: 16px; margin-top: 8px;">...</h4>
+          <p style="font-size: 9px; color: var(--color-gray-500); text-transform: uppercase; letter-spacing: 0.05em;">CONVENER: <strong id="cert-convenor-name">...</strong></p>
+        </div>
+
+        <div style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; color: var(--color-gray-400); max-width: 380px; margin: 0 auto; width: 100%;">
+          <div style="text-align: left;">
+            <div id="cert-date-label" class="font-mono font-bold" style="color: black;">...</div>
+            <div>ISSUE DATE</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="font-mono font-bold" style="color: black;">LITTLEBITS</div>
+            <div>VERIFYING BODY</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action print buttons -->
+      <div id="print-actions" style="display: flex; gap: 16px; justify-content: flex-end; margin-top: 32px;">
+        <button id="print-now-btn" class="glass-btn" style="padding: 10px 20px; font-size: 10px; border-color: rgba(0,0,0,0.1); color: var(--color-gray-600); font-weight: bold; border-radius: 6px;">Print Record</button>
+        <button id="pdf-download-btn" class="btn-white" style="padding: 10px 20px; font-size: 10px; border-radius: 6px; background: black; color: white;">Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="profile-edit-modal" class="modal-backdrop">
+    <div class="modal-content" style="max-width: 420px; padding: 32px;">
+      <button id="profile-modal-close" class="modal-close">✕</button>
+      <h3 class="font-display font-bold text-white uppercase" style="font-size: 14px; letter-spacing: 0.05em; margin-bottom: 24px;">Edit Profile</h3>
+      <form id="profile-edit-form" style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--color-gray-500); letter-spacing: 0.1em;">Full Name</label>
+          <input type="text" id="profile-edit-name" name="name" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 13px;" />
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--color-gray-500); letter-spacing: 0.1em;">Email Address</label>
+          <input type="email" id="profile-edit-email" name="email" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 13px;" />
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--color-gray-500); letter-spacing: 0.1em;">Profile Photo</label>
+          <input type="file" id="profile-edit-avatar" accept="image/*" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 11px;" />
+        </div>
+        <button type="submit" class="btn-white rounded-lg" style="width: 100%; padding: 12px; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 10px;">Save Profile</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="container flex-between text-xs text-gray">
+    <div>LITTLE<span class="text-white">BITS</span></div>
+    <div>© 2026 LittleBits Chapters. All rights reserved.</div>
+  </footer>
+
+  <!-- Mock Database & Shared Controllers -->
+  <script src="js/db.js"></script>
+  <script src="js/db2.js"></script>
+  <script src="js/background.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/navbar2.js"></script>
+  
+  <!-- Page Logic -->
+  <script src="js/dashboard.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

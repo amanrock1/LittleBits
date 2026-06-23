@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Events | LittleBits</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .events-header {
+      padding: 80px 0 40px;
+    }
+    .header-row {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (min-width: 768px) {
+      .header-row { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+    }
+    .switch-wrapper {
+      display: flex;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(6, 6, 8, 0.4);
+      padding: 2px;
+      border-radius: 8px;
+      width: fit-content;
+    }
+    .switch-btn {
+      padding: 8px 16px;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: none;
+      border: none;
+      color: var(--color-gray-400);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .switch-btn.active {
+      background: white;
+      color: black;
+    }
+    .search-row {
+      margin-bottom: 48px;
+    }
+    .event-card {
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card-banner {
+      height: 224px;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .card-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) brightness(0.75);
+    }
+    .convenor-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: black;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 8px;
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .timer-overlay {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: bold;
+      font-family: monospace;
+      letter-spacing: 0.05em;
+    }
+    .timer-box {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4px 8px;
+      background: rgba(6, 6, 8, 0.6);
+      backdrop-filter: blur(4px);
+      border-radius: 4px;
+      color: white;
+    }
+    .card-content {
+      padding: 24px;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: white;
+      transition: width 0.4s;
+    }
+    .progress-bar-fill.sold-out {
+      background: #ef4444;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Header -->
+  <section class="container events-header">
+    <div class="header-row">
+      <div style="display: flex; flex-direction: column; gap: 8px; max-width: 500px;">
+        <span class="stat-label font-display" style="font-weight: bold;">Symposium Schedule</span>
+        <h1 class="font-editorial text-white" style="font-size: 48px;">Campus Exhibitions</h1>
+        <p style="color: var(--color-gray-500); font-size: 14px; font-weight: 300;">
+          Claim passes for hackathons, engineering expos, music recitals, and research roundtables.
+        </p>
+      </div>
+
+      <!-- Mode switch buttons -->
+      <div class="switch-wrapper font-display">
+        <button id="switch-all-btn" class="switch-btn active">All Events</button>
+        <button id="switch-my-btn" class="switch-btn">My Bookings (0)</button>
+      </div>
+    </div>
+
+    <!-- Search input -->
+    <div class="search-row">
+      <input id="search-events-input" type="text" placeholder="Search exhibitions and convenors..." class="glass-input" style="padding: 12px; border-radius: 12px; font-size: 12px; width: 100%; max-width: 450px;" />
+    </div>
+
+    <!-- Grid list -->
+    <div class="grid-3" id="events-grid-placeholder">
+      <!-- Cards rendered dynamically -->
+    </div>
+  </section>
+
+  <!-- Past Events Gallery Section -->
+  <section class="container" style="padding: 60px 0 100px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 60px;">
+    <span class="stat-label font-display" style="font-weight: bold; color: var(--color-gray-500);">Archives</span>
+    <h2 class="font-editorial text-white" style="font-size: 40px; margin-top: 8px; margin-bottom: 32px;">Past Events Gallery</h2>
+
+    <div class="grid-3" id="past-events-placeholder">
+      <!-- Injected via js/events.js -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="container flex-between text-xs text-gray">
+    <div>LITTLE<span class="text-white">BITS</span></div>
+    <div>© 2026 LittleBits Chapters. All rights reserved.</div>
+  </footer>
+
+  <!-- Mock Database & Shared Controllers -->
+  <script src="js/db.js"></script>
+  <script src="js/db2.js"></script>
+  <script src="js/background.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/navbar2.js"></script>
+  
+  <!-- Page Logic -->
+  <script src="js/events.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

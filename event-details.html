@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Pass Reservation | LittleBits</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    .event-cover-banner {
+      height: 320px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      z-index: 10;
+    }
+    .event-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) brightness(0.4) contrast(1.2);
+    }
+    .back-nav-btn {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      z-index: 20;
+      padding: 8px 16px;
+      background: rgba(6, 6, 8, 0.85);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .event-details-grid {
+      position: relative;
+      margin-top: -64px;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    @media (min-width: 992px) {
+      .event-details-grid { grid-template-columns: 2fr 1fr; }
+    }
+    .speaker-card {
+      padding: 16px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .sidebar-sticky-panel {
+      padding: 24px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 100px;
+    }
+    .ticket-step-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .ticket-step-bar span.active {
+      color: white;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .input-label {
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      letter-spacing: 0.1em;
+    }
+    .qr-box-frame {
+      max-width: 240px;
+      margin: 0 auto;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.01);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .qr-pixel-grid {
+      width: 128px;
+      height: 128px;
+      background: white;
+      padding: 8px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 2px;
+    }
+    .qr-pixel {
+      width: 100%;
+      height: 100%;
+    }
+    .qr-pixel.dark {
+      background: #060608;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Cover image banner -->
+  <div class="event-cover-banner">
+    <img id="event-cover-img" src="" alt="Event cover" class="event-banner-img" />
+    <a href="events.html" class="back-nav-btn"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> Back</a>
+  </div>
+
+  <!-- Main page container -->
+  <main class="container event-details-grid">
+    
+    <!-- Left Column contents -->
+    <div style="display: flex; flex-direction: column; gap: 48px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <span id="event-convenor-label" class="stat-label font-display" style="font-weight: bold; color: var(--color-gray-500);">Convened by ...</span>
+        <h1 id="event-title-label" class="font-editorial text-white" style="font-size: 40px; font-weight: bold; line-height: 1.15;">...</h1>
+        <p id="event-desc-label" class="font-display" style="color: var(--color-gray-400); font-size: 15px; line-height: 1.7; font-weight: 300;">...</p>
+      </div>
+
+      <!-- Agenda -->
+      <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 32px; display: flex; flex-direction: column; gap: 24px;">
+        <h3 class="stat-label font-display" style="font-weight: bold; color: var(--color-gray-500);">Exhibition Agenda</h3>
+        <div id="event-agenda-placeholder" style="display: flex; flex-direction: column; gap: 24px;">
+          <!-- Agenda items injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Panel Speakers -->
+      <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 32px; display: flex; flex-direction: column; gap: 24px;">
+        <h3 class="stat-label font-display" style="font-weight: bold; color: var(--color-gray-500);">Panel Speakers</h3>
+        <div id="event-speakers-placeholder" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+          <!-- Speakers injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column Sidebar Pass Card -->
+    <div>
+      <div class="sidebar-sticky-panel glass-panel shadow-2xl">
+        <h3 class="stat-label font-display" style="font-weight: bold;">Pass Reservation</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 12px; color: var(--color-gray-400);">
+          <div class="flex-between" style="border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 8px;">
+            <span style="color: var(--color-gray-500);">Date</span>
+            <span id="sidebar-date-label" class="text-white font-semibold">...</span>
+          </div>
+          <div class="flex-between" style="border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 8px;">
+            <span style="color: var(--color-gray-500);">Venue</span>
+            <span id="sidebar-venue-label" class="text-white font-semibold">...</span>
+          </div>
+          <div class="flex-between">
+            <span style="color: var(--color-gray-500);">Availability</span>
+            <span id="sidebar-seats-label" class="text-white font-semibold">...</span>
+          </div>
+        </div>
+
+        <div id="sidebar-action-container">
+          <!-- Populated by events-details.js depending on registration status -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Multi-step Pass Registration Dialog Modal -->
+  <div id="register-modal" class="modal-backdrop">
+    <div class="modal-content glass-panel" style="max-width: 480px;">
+      <button id="register-modal-close" class="modal-close">✕</button>
+      
+      <div style="margin-bottom: 24px;">
+        <h3 class="font-display font-bold text-white uppercase" style="font-size: 16px; letter-spacing: 0.05em;">Exhibition Pass Reservation</h3>
+        <p id="modal-event-title-label" style="font-size: 10px; color: var(--color-gray-500); margin-top: 4px;"></p>
+      </div>
+
+      <!-- Step bar progress -->
+      <div class="ticket-step-bar font-display">
+        <span id="step-label-1" class="active">01. Profile</span>
+        <i data-lucide="chevron-right" style="width: 12px; height: 12px;"></i>
+        <span id="step-label-2">02. Confirm</span>
+        <i data-lucide="chevron-right" style="width: 12px; height: 12px;"></i>
+        <span id="step-label-3">03. Ticket</span>
+      </div>
+
+      <!-- Error box -->
+      <div id="register-error-box" class="glass-panel" style="display: none; padding: 12px; margin-bottom: 16px; color: #ef4444; border-color: rgba(239,68,68,0.2); font-size: 10px; font-weight: bold; text-transform: uppercase; border-radius: 8px;"></div>
+
+      <!-- Form step views -->
+      <div id="step-views-container">
+        <!-- Injected dynamically by events-details.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="container flex-between text-xs text-gray">
+    <div>LITTLE<span class="text-white">BITS</span></div>
+    <div>© 2026 LittleBits Chapters. All rights reserved.</div>
+  </footer>
+
+  <!-- Mock Database & Shared Controllers -->
+  <script src="js/db.js"></script>
+  <script src="js/db2.js"></script>
+  <script src="js/background.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/navbar2.js"></script>
+  
+  <!-- Page Logic -->
+  <script src="js/event-details.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

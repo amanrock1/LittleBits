@@ -1,0 +1,171 @@
+/* Animation System for LittleBits Project */
+
+/* Card Interactions and Ambient Hover Effects */
+.event-card, .glass-card, .pass-item-card {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+}
+
+.event-card:hover, .glass-card:hover, .pass-item-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.03);
+}
+
+/* Unique Glimpse Intro Loader Animations */
+@keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+    filter: blur(10px);
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.glimpse-in {
+  animation: blur-scale-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes blur-scale-in {
+  0% {
+    filter: blur(12px);
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Reveal Main Landing Page Animation */
+.fade-in-up-page {
+  animation: fadeInUpPage 1s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+
+@keyframes fadeInUpPage {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+    filter: blur(5px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Pulse animation utility */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+/* Attractive Join Button Styles */
+.join-btn-directory {
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  font-size: 9px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Joined state button (Teal/Green gradient glassmorphism) */
+.join-btn-directory.joined {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.05) 100%) !important;
+  border: 1px solid rgba(16, 185, 129, 0.45) !important;
+  color: #10b981 !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+  position: relative;
+}
+
+.join-btn-directory.joined:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.1) 100%) !important;
+  border: 1px solid rgba(16, 185, 129, 0.6) !important;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.35);
+}
+
+/* Not Joined state button (Sleek translucent glass) */
+.join-btn-directory.not-joined {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: var(--color-gray-300) !important;
+}
+
+.join-btn-directory.not-joined:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* Membership Invitation Letter Modal Animations */
+.invitation-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 6, 8, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.invitation-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.invitation-card {
+  width: 440px;
+  max-width: 90%;
+  background: rgba(12, 12, 16, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 40px rgba(16, 185, 129, 0.15);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  transform: scale(0.7) rotateX(-20deg) translateY(50px);
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.invitation-overlay.active .invitation-card {
+  transform: scale(1) rotateX(0deg) translateY(0);
+  opacity: 1;
+}
+
+/* Custom styles for invitation content */
+.invitation-seal {
+  font-size: 56px;
+  margin-bottom: 24px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}

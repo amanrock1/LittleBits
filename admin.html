@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration Console | LittleBits</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .admin-header {
+      padding: 80px 0 40px;
+    }
+    .header-row {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 48px;
+    }
+    @media (min-width: 768px) {
+      .header-row { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+    }
+    .admin-tabs {
+      display: flex;
+      gap: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 12px;
+      margin-bottom: 30px;
+    }
+    .admin-tab-btn {
+      background: none;
+      border: none;
+      color: var(--color-gray-500);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 12px;
+    }
+    .admin-tab-btn.active {
+      color: white;
+    }
+    .admin-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -13px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: white;
+    }
+    .admin-table-container {
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .admin-row {
+      padding: 20px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.2s;
+    }
+    .admin-row:last-child {
+      border-bottom: none;
+    }
+    .admin-row:hover {
+      background: rgba(255,255,255,0.01);
+    }
+    @media (min-width: 576px) {
+      .admin-row { flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; }
+    }
+    .badge-status {
+      padding: 2px 8px;
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 4px;
+    }
+    .badge-status.authorized {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+    .badge-status.locked {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--color-gray-500);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .action-icon-btn {
+      background: none;
+      border: none;
+      color: var(--color-gray-500);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .action-icon-btn:hover {
+      color: white;
+      background: rgba(255,255,255,0.05);
+    }
+    .action-icon-btn.rose:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .input-label {
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--color-gray-500);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Main content wrapper -->
+  <main class="container">
+    <!-- Header row -->
+    <section class="admin-header">
+      <div class="header-row">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span class="stat-label font-display" style="font-weight: bold; color: var(--color-gray-500);">Chapters Operations</span>
+          <h1 class="font-editorial text-white" style="font-size: 48px;">Administration Console</h1>
+          <p style="color: var(--color-gray-500); font-size: 12px;">
+            Active Session: <strong id="admin-user-scope" class="text-white">...</strong>
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+          <button id="add-club-modal-trigger" class="btn-white rounded-lg" style="display: none;">Add Club</button>
+          <button id="deploy-event-modal-trigger" class="glass-btn rounded-lg" style="padding: 12px 24px; font-size: 11px; font-weight: bold; text-transform: uppercase;">Deploy Event</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analytics widgets -->
+    <section class="grid-3 font-display" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; margin-bottom: 48px;">
+      <div class="glass-panel" style="padding: 24px; border-radius: 12px;">
+        <span class="stat-label" style="font-weight: bold; font-size: 8px;">Chapters Active</span>
+        <div id="metric-clubs-count" style="font-size: 24px; font-weight: bold; color: white; margin-top: 8px;">0</div>
+      </div>
+      <div class="glass-panel" style="padding: 24px; border-radius: 12px;">
+        <span class="stat-label" style="font-weight: bold; font-size: 8px;">Total Members</span>
+        <div id="metric-members-count" style="font-size: 24px; font-weight: bold; color: white; margin-top: 8px;">0</div>
+      </div>
+      <div class="glass-panel" style="padding: 24px; border-radius: 12px;">
+        <span class="stat-label" style="font-weight: bold; font-size: 8px;">Allocated Seats</span>
+        <div id="metric-seats-count" style="font-size: 24px; font-weight: bold; color: white; margin-top: 8px;">0</div>
+      </div>
+      <div class="glass-panel" style="padding: 24px; border-radius: 12px;">
+        <span class="stat-label" style="font-weight: bold; font-size: 8px;">Live Events</span>
+        <div id="metric-events-count" style="font-size: 24px; font-weight: bold; color: white; margin-top: 8px;">0</div>
+      </div>
+    </section>
+
+    <!-- Selector tabs -->
+    <section class="admin-tabs font-display">
+      <button class="admin-tab-btn active" data-tab="dashboard" id="tab-dashboard-label">Dashboard</button>
+      <button class="admin-tab-btn" data-tab="events" id="tab-events-label">Events</button>
+      <button class="admin-tab-btn" data-tab="members" id="tab-members-label">Members</button>
+      <button class="admin-tab-btn" data-tab="settings" id="tab-settings-label">Settings</button>
+      <button class="admin-tab-btn" data-tab="verify" id="tab-verify-label">Verify Passes</button>
+    </section>
+
+    <!-- Data list table -->
+    <section class="admin-table-container glass-panel shadow-2xl" id="admin-table-placeholder">
+      <!-- Data rows injected dynamically -->
+    </section>
+  </main>
+
+  <!-- Add Club Modal -->
+  <div id="add-club-modal" class="modal-backdrop">
+    <div class="modal-content glass-panel">
+      <button id="add-club-modal-close" class="modal-close">✕</button>
+      <h3 class="font-display font-bold text-white uppercase" style="font-size: 16px; margin-bottom: 24px;">Register Chapter</h3>
+      
+      <form id="add-club-form" style="display: flex; flex-direction: column; gap: 16px; font-size: 12px;">
+        <div class="input-group">
+          <label class="input-label">Club Name</label>
+          <input type="text" name="name" required placeholder="e.g. Lambda Lambda Alpha" class="glass-input" style="padding: 12px; border-radius: 8px;" />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="input-group">
+            <label class="input-label">Category</label>
+            <select name="category" class="glass-input" style="padding: 12px; border-radius: 8px; background: #060608; border-color: rgba(255,255,255,0.05); color: white;">
+              <option value="Coding">Coding</option>
+              <option value="Music">Music</option>
+              <option value="Sports">Sports</option>
+              <option value="Photography">Photography</option>
+              <option value="Robotics">Robotics</option>
+              <option value="Entrepreneurship">Entrepreneurship</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Icon Emoji</label>
+            <input type="text" name="logo" required value="🚀" class="glass-input" style="padding: 12px; border-radius: 8px;" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Description</label>
+          <textarea name="description" required rows="3" placeholder="What is the mission of this community?" class="glass-input" style="padding: 12px; border-radius: 8px;"></textarea>
+        </div>
+        <button type="submit" class="btn-white rounded-lg w-full" style="margin-top: 16px;">Submit Chapter Roster</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Deploy Event Modal -->
+  <div id="deploy-event-modal" class="modal-backdrop">
+    <div class="modal-content glass-panel">
+      <button id="deploy-event-modal-close" class="modal-close">✕</button>
+      <h3 class="font-display font-bold text-white uppercase" style="font-size: 16px; margin-bottom: 24px;">Configure Event</h3>
+      
+      <form id="deploy-event-form" style="display: flex; flex-direction: column; gap: 16px; font-size: 12px;">
+        <div class="input-group">
+          <label class="input-label">Hosting Club</label>
+          <div id="hosting-club-static" style="display: none; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); color: var(--color-gray-400); font-weight: bold;"></div>
+          <select id="hosting-club-select" name="clubId" class="glass-input" style="padding: 12px; border-radius: 8px; background: #060608; border-color: rgba(255,255,255,0.05); color: white;">
+            <!-- Rendered dynamically -->
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Event Title</label>
+          <input type="text" name="title" required placeholder="e.g. Algorithm Sprint" class="glass-input" style="padding: 12px; border-radius: 8px;" />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="input-group">
+            <label class="input-label">Venue</label>
+            <input type="text" name="venue" required placeholder="e.g. Block C Hall" class="glass-input" style="padding: 12px; border-radius: 8px;" />
+          </div>
+          <div class="input-group">
+            <label class="input-label">Seats Limit</label>
+            <input type="number" name="totalSeats" required value="100" class="glass-input" style="padding: 12px; border-radius: 8px;" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Date & Time</label>
+          <input type="datetime-local" name="date" required class="glass-input" style="padding: 12px; border-radius: 8px; background: #060608; border-color: rgba(255,255,255,0.05); color: white;" />
+        </div>
+        <button type="submit" class="btn-white rounded-lg w-full" style="margin-top: 16px;">Deploy Live Event</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="container flex-between text-xs text-gray">
+    <div>LITTLE<span class="text-white">BITS</span></div>
+    <div>© 2026 LittleBits Chapters. All rights reserved.</div>
+  </footer>
+
+  <!-- Mock Database & Shared Controllers -->
+  <script src="js/db.js"></script>
+  <script src="js/db2.js"></script>
+  <script src="js/background.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/navbar2.js"></script>
+  
+  <!-- Page Logic -->
+  <script src="js/admin.js"></script>
+  <script src="js/admin2.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LittleBits | Club & Event Hub</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animation.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Custom layout for Landing */
+    .hero-section {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 0;
+    }
+
+    .hero-tag {
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--color-gray-500);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .hero-headline {
+      font-size: 80px;
+      line-height: 0.95;
+      font-weight: 300;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-headline {
+        font-size: 48px;
+      }
+    }
+
+    .hero-split {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 30px;
+    }
+
+    .hero-description {
+      grid-column: 5 / 13;
+      color: var(--color-gray-400);
+      font-size: 18px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    @media (max-width: 768px) {
+      .hero-description {
+        grid-column: 1 / 13;
+      }
+    }
+
+    .hero-actions {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .counter-stats {
+      margin-top: 80px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 40px;
+      display: flex;
+      gap: 60px;
+    }
+
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .stat-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--color-gray-500);
+    }
+
+    .featured-section {
+      padding: 100px 0;
+    }
+
+    .promo-section {
+      padding: 80px 0;
+    }
+
+    .promo-panel {
+      padding: 60px;
+      border-radius: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .promo-panel {
+        grid-template-columns: 1fr;
+        padding: 30px;
+        gap: 30px;
+      }
+    }
+
+    .promo-image {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      filter: grayscale(1);
+      opacity: 0.8;
+    }
+
+    .marquee-card {
+      width: 380px;
+      padding: 32px;
+      border-radius: 16px;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+
+<body style="overflow: hidden;">
+
+  <!-- 5-Second Intro/Loading Screen Overlay -->
+  <div id="intro-loader"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #060608; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, visibility 0.8s ease;">
+    <div class="glass-panel"
+      style="padding: 48px; border-radius: 20px; text-align: center; max-width: 480px; width: 90%; display: flex; flex-direction: column; align-items: center; gap: 24px; border: 1px solid rgba(255,255,255,0.06); background: rgba(6, 6, 8, 0.7); backdrop-filter: blur(20px); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+      <div
+        style="font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3em; color: var(--color-gray-500); animation: pulse 2s infinite;">
+        LOADING ARCHIVES</div>
+
+      <!-- Big Headline with Unique Letter/Scale Animation -->
+      <h1 class="font-editorial"
+        style="font-size: 38px; color: white; line-height: 1.1; margin: 0; letter-spacing: -0.01em; animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;">
+        LITTLE<span style="font-style: italic; font-weight: 300; opacity: 0.7;">BITS</span>
+      </h1>
+
+      <!-- Dynamic Showcase Glimpse Area -->
+      <div id="showcase-glimpse-box"
+        style="height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; transition: all 0.5s ease; min-width: 250px;">
+        <span id="showcase-logo"
+          style="font-size: 48px; filter: drop-shadow(0 0 12px rgba(255,255,255,0.15)); transition: transform 0.4s ease; transform: scale(1); display: flex; align-items: center; justify-content: center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" style="width: 48px; height: 48px; object-fit: cover; border-radius: 8px; filter: invert(1);"/>
+        </span>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <h3 id="showcase-name" class="font-display"
+            style="font-size: 14px; font-weight: bold; color: white; letter-spacing: 0.05em; text-transform: uppercase; margin: 0;">
+            APEX CODERS</h3>
+          <span id="showcase-category"
+            style="font-size: 9px; color: var(--color-gray-500); text-transform: uppercase; letter-spacing: 0.1em;">CODING</span>
+        </div>
+      </div>
+
+      <!-- Smooth Loading Progress Bar -->
+      <div
+        style="width: 100%; height: 3px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; position: relative;">
+        <div id="intro-progress-fill"
+          style="width: 0%; height: 100%; background: white; transition: width 0.1s linear;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-content" style="opacity: 0; transition: opacity 0.8s ease;">
+    <!-- Top Navbar Placeholder -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="container hero-section">
+
+
+      <h1 class="hero-headline font-editorial">
+        Connect. <br />
+        <span class="text-gray" style="font-style: italic;">Create.</span> <br />
+        Celebrate.
+      </h1>
+
+      <div class="hero-split">
+        <div class="hero-description font-display">
+          <p>Welcome to a vibrant digital campus. Explore interconnected guilds, track live event seats, build
+            achievements, and discover active communities.</p>
+
+          <div class="hero-actions">
+            <a href="clubs.html" class="btn-white rounded-lg" style="text-decoration: none;">Explore Clubs</a>
+            <a href="events.html" class="glass-btn rounded-lg"
+              style="padding: 12px 24px; font-size: 11px; font-weight: bold; text-transform: uppercase;">Upcoming
+              Events</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="counter-stats font-display">
+        <div class="stat-box">
+          <div class="stat-number" id="stats-clubs-count">0</div>
+          <div class="stat-label">Active Chapters</div>
+        </div>
+        <div class="stat-box" style="border-left: 1px solid rgba(255,255,255,0.05); padding-left: 40px;">
+          <div class="stat-number">1,820+</div>
+          <div class="stat-label">Active Members</div>
+        </div>
+        <div class="stat-box" style="border-left: 1px solid rgba(255,255,255,0.05); padding-left: 40px;">
+          <div class="stat-number" id="stats-events-count">0</div>
+          <div class="stat-label">Upcoming Exhibits</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Clubs section with Category filters -->
+    <section class="container featured-section">
+      <div class="flex-between" style="margin-bottom: 32px;">
+        <div>
+          <span class="stat-label font-display" style="font-weight: bold;">Featured Clubs</span>
+          <h2 class="font-editorial text-white" style="font-size: 40px; margin-top: 8px;">Featured Categories</h2>
+        </div>
+        <a href="clubs.html" class="font-display text-white"
+          style="font-size: 12px; text-transform: uppercase; font-weight: bold; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2px;">Explore
+          All</a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <a href="clubs.html?category=Music" class="glass-card"
+          style="padding: 32px; text-align: center; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; gap: 12px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/3844/3844724.png" style="width: 40px; height: 40px; object-fit: cover; opacity: 0.9; filter: invert(1) brightness(1.5);" />
+          <span class="font-display uppercase"
+            style="font-size: 11px; font-weight: bold; letter-spacing: 0.05em; color: white;">Music</span>
+        </a>
+        <a href="clubs.html?category=Sports" class="glass-card"
+          style="padding: 32px; text-align: center; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; gap: 12px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" style="width: 40px; height: 40px; object-fit: cover; opacity: 0.9; filter: invert(1) brightness(1.5);" />
+          <span class="font-display uppercase"
+            style="font-size: 11px; font-weight: bold; letter-spacing: 0.05em; color: white;">Sports</span>
+        </a>
+        <a href="clubs.html?category=Coding" class="glass-card"
+          style="padding: 32px; text-align: center; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; gap: 12px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" style="width: 40px; height: 40px; object-fit: cover; opacity: 0.9; filter: invert(1) brightness(1.5);" />
+          <span class="font-display uppercase"
+            style="font-size: 11px; font-weight: bold; letter-spacing: 0.05em; color: white;">Coding</span>
+        </a>
+        <a href="clubs.html?category=Photography" class="glass-card"
+          style="padding: 32px; text-align: center; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; gap: 12px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/685/685655.png" style="width: 40px; height: 40px; object-fit: cover; opacity: 0.9; filter: invert(1) brightness(1.5);" />
+          <span class="font-display uppercase"
+            style="font-size: 11px; font-weight: bold; letter-spacing: 0.05em; color: white;">Photography</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Upcoming Events Section -->
+    <section class="container" style="padding: 60px 0 100px;">
+      <div class="flex-between" style="margin-bottom: 32px;">
+        <div>
+          <span class="stat-label font-display" style="font-weight: bold;">Live Schedule</span>
+          <h2 class="font-editorial text-white" style="font-size: 40px; margin-top: 8px;">Upcoming Events</h2>
+        </div>
+        <a href="events.html" class="font-display text-white"
+          style="font-size: 12px; text-transform: uppercase; font-weight: bold; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2px;">View
+          All Events</a>
+      </div>
+
+      <div class="grid-3" id="upcoming-events-placeholder">
+        <!-- Injected dynamically via landing.js -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container flex-between text-xs text-gray">
+      <div>LITTLE<span class="text-white">BITS</span></div>
+      <div style="display: flex; gap: 24px;">
+        <a href="#" style="color: inherit; text-decoration: none;">Contact</a>
+        <span style="opacity: 0.2;">|</span>
+        <a href="#" style="color: inherit; text-decoration: none;">Social Media</a>
+        <span style="opacity: 0.2;">|</span>
+        <a href="#" style="color: inherit; text-decoration: none;">About</a>
+      </div>
+      <div>© 2026 LittleBits Chapters. All rights reserved.</div>
+    </footer>
+
+  </div> <!-- /#main-content -->
+
+  <!-- Mock Database & Shared Controllers -->
+  <script src="js/db.js"></script>
+  <script src="js/db2.js"></script>
+  <script>
+    // Intro Loader Controller Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const loader = document.getElementById('intro-loader');
+      const progressFill = document.getElementById('intro-progress-fill');
+      const scLogo = document.getElementById('showcase-logo');
+      const scName = document.getElementById('showcase-name');
+      const scCategory = document.getElementById('showcase-category');
+      const mainContent = document.getElementById('main-content');
+
+      // Check if this is a manual reload or the first time loading in this session
+      const navEntries = performance.getEntriesByType('navigation');
+      const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
+      const hasLoadedBefore = sessionStorage.getItem('introLoaded') === 'true';
+      const skipIntroNext = sessionStorage.getItem('skipIntroNext') === 'true';
+      if (skipIntroNext) {
+        sessionStorage.removeItem('skipIntroNext');
+      }
+
+      if (skipIntroNext || (hasLoadedBefore && !isReload)) {
+        // Skip loading screen, display instantly
+        if (loader) loader.remove();
+        document.body.style.overflow = '';
+        if (mainContent) {
+          mainContent.style.opacity = '1';
+        }
+        return;
+      }
+
+      const clubs = getClubs(); // read dynamic clubs list
+      let index = 0;
+
+      // Function to switch showcase club glimpse
+      const updateShowcase = () => {
+        if (clubs.length === 0) return;
+        const club = clubs[index];
+
+        // Remove animation class and trigger reflow
+        scLogo.classList.remove('glimpse-in');
+        scName.classList.remove('glimpse-in');
+        scCategory.classList.remove('glimpse-in');
+
+        void scLogo.offsetWidth; // force reflow
+
+        // Update content
+        const isImg = club.logo.startsWith('http') || club.logo.startsWith('/') || club.logo.startsWith('.') || club.logo.includes('/');
+        const needsInvert = ['coding', 'music', 'photography'].includes(club.category.toLowerCase());
+        const filterStyle = needsInvert ? 'filter: invert(1) brightness(1.5);' : '';
+        scLogo.innerHTML = isImg ? `<img src="${club.logo}" style="width: 48px; height: 48px; object-fit: contain; ${filterStyle} border-radius: 8px;"/>` : club.logo;
+        scName.innerText = club.name;
+        scCategory.innerText = club.category;
+
+        // Add animation class back
+        scLogo.classList.add('glimpse-in');
+        scName.classList.add('glimpse-in');
+        scCategory.classList.add('glimpse-in');
+
+        index = (index + 1) % clubs.length;
+      };
+
+      // Cycle every 800ms
+      updateShowcase();
+      const cycleInterval = setInterval(updateShowcase, 800);
+
+      // Animate progress bar over 3 seconds (3000ms)
+      let elapsed = 0;
+      const duration = 2000;
+      const progressInterval = setInterval(() => {
+        elapsed += 100;
+        const pct = Math.min(100, (elapsed / duration) * 100);
+        progressFill.style.width = pct + '%';
+
+        if (elapsed >= duration) {
+          clearInterval(progressInterval);
+          clearInterval(cycleInterval);
+
+          // Fade out loader
+          loader.style.opacity = '0';
+          loader.style.visibility = 'hidden';
+          document.body.style.overflow = ''; // restore scrolling
+
+          // Save load state in session storage
+          sessionStorage.setItem('introLoaded', 'true');
+
+          // Animate page elements in
+          if (mainContent) {
+            mainContent.classList.add('fade-in-up-page');
+            mainContent.style.opacity = '1';
+          }
+          setTimeout(() => {
+            loader.remove(); // cleanup
+          }, 800);
+        }
+      }, 100);
+    });
+  </script>
+  <script src="js/background.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/navbar2.js"></script>
+
+  <!-- Page Logic -->
+  <script src="js/landing.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>

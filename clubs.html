@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LittleBits Chapters | Registry</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animation.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .directory-header {
+      padding: 80px 0 40px;
+    }
+    .filter-bar {
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      .filter-bar { flex-direction: row; align-items: center; justify-content: space-between; }
+    }
+    .search-input-wrapper {
+      flex: 1;
+      max-width: 480px;
+    }
+    .sort-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .sort-options {
+      display: flex;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(6, 6, 8, 0.3);
+      padding: 2px;
+      border-radius: 8px;
+    }
+    .sort-btn {
+      padding: 6px 12px;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      color: var(--color-gray-400);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .sort-btn.active {
+      background: white;
+      color: black;
+    }
+    .category-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+    .chip {
+      padding: 8px 16px;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 12px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      color: var(--color-gray-500);
+      transition: all 0.2s;
+    }
+    .chip.active, .chip:hover {
+      background: white;
+      border-color: white;
+      color: black;
+    }
+    .club-card {
+      padding: 32px;
+      border-radius: 16px;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Header -->
+  <section class="container directory-header">
+    <div style="display: flex; flex-direction: column; gap: 8px; max-width: 600px;">
+      <span class="stat-label font-display" style="font-weight: bold;">Registry Index</span>
+      <h1 class="font-editorial text-white" style="font-size: 48px;">Chapters Directory</h1>
+      <p style="color: var(--color-gray-500); font-size: 14px; font-weight: 300;">
+        Search active campus chapters, academic interest assemblies, and student research groups.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filters & List -->
+  <section class="container">
+    <!-- Filter bar container -->
+    <div class="filter-bar glass-panel shadow-xl">
+      <div class="search-input-wrapper">
+        <input id="search-input" type="text" placeholder="Search Clubs 🔍" class="glass-input w-full" style="padding: 12px; border-radius: 12px; font-size: 12px;" />
+      </div>
+
+      <div class="sort-wrapper">
+        <span class="stat-label" style="font-weight: bold;">Sort</span>
+        <div class="sort-options">
+          <button id="sort-members-btn" class="sort-btn">Size</button>
+          <button id="sort-name-btn" class="sort-btn active">Alphabetical</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filter Chips -->
+    <div class="category-chips" id="category-chips-placeholder">
+      <!-- Chips populated dynamically -->
+    </div>
+
+    <!-- Directory Grid -->
+    <div class="grid-3" id="directory-grid-placeholder">
+      <!-- Grid items populated dynamically -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="container flex-between text-xs text-gray">
+    <div>LITTLE<span class="text-white">BITS</span></div>
+    <div>© 2026 LittleBits Chapters. All rights reserved.</div>
+  </footer>
+
+  <!-- Mock Database & Shared Controllers -->
+  <script src="js/db.js"></script>
+  <script src="js/db2.js"></script>
+  <script src="js/background.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/navbar2.js"></script>
+  
+  <!-- Page Logic -->
+  <script src="js/directory.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

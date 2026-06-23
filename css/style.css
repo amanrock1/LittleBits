@@ -1,0 +1,400 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-primary: #ffffff;
+  --color-primary-glow: #e2e8f0;
+  --color-purple: #1e1b4b;
+  --color-purple-glow: #312e81;
+  --color-dark-deep: #060608;
+  --color-dark-card: rgba(12, 12, 16, 0.55);
+  --color-gray-500: #71717a;
+  --color-gray-400: #a1a1aa;
+  --color-gray-600: #52525b;
+  --color-text-muted: #c9cbcf;
+  
+  font-family: 'Inter', sans-serif;
+  color-scheme: dark;
+  background-color: var(--color-dark-deep);
+  color: var(--color-text-muted);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-dark-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(12, 12, 16, 0.55);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glass-card {
+  background: rgba(18, 18, 24, 0.72); /* Reduced transparency for better contrast */
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card:hover {
+  background: rgba(25, 25, 35, 0.82);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.03);
+  transform: translateY(-4px);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: white;
+  transition: all 0.3s ease;
+}
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.03);
+  outline: none;
+}
+
+.glass-btn {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-btn:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #060608;
+}
+
+/* Layout Elements */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Typography styles */
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+}
+.font-editorial {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Navbar */
+.main-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1005;
+  width: 100%;
+  background: rgba(6, 6, 8, 0.4);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 15px 40px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+.logo-box {
+  width: 32px;
+  height: 32px;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+.nav-link {
+  background: none;
+  border: none;
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+  padding: 5px 0;
+  position: relative;
+}
+.nav-link.active, .nav-link:hover {
+  color: white;
+}
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: white;
+}
+
+/* Infinite Marquee */
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  display: flex;
+  background: rgba(255, 255, 255, 0.01);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 2rem;
+  animation: marquee 50s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 1rem)); }
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 40px 0;
+  margin-top: 100px;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-content {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  border-radius: 16px;
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--color-gray-500);
+  font-size: 20px;
+  cursor: pointer;
+}
+.modal-close:hover {
+  color: white;
+}
+
+
+
+/* Buttons utility classes */
+.btn-white {
+  background: white;
+  color: black;
+  border: 1px solid white;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 11px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-white:hover {
+  background: #e4e4e7;
+  border-color: #e4e4e7;
+}
+
+.text-gray {
+  color: var(--color-gray-500);
+}
+.text-white {
+  color: white;
+}
+.bg-deep {
+  background-color: var(--color-dark-deep);
+}
+.rounded-lg {
+  border-radius: 8px;
+}
+.rounded-xl {
+  border-radius: 12px;
+}
+.rounded-2xl {
+  border-radius: 16px;
+}
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+.w-full {
+  width: 100%;
+}
+.text-xs {
+  font-size: 12px;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+.tracking-widest {
+  letter-spacing: 0.15em;
+}
+
+/* UI Helper Classes for JS Dynamic Templates */
+.nav-btn-link {
+  background: none;
+  border: none;
+  color: var(--color-gray-400);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0;
+  transition: color 0.2s;
+}
+.nav-btn-link:hover {
+  color: white;
+}
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  z-index: 100;
+  margin-top: 10px;
+  border-radius: 12px;
+  padding: 16px;
+  background: rgba(12, 12, 16, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.inbox-dropdown {
+  width: 320px;
+}
+.user-dropdown {
+  width: 240px;
+  padding: 8px;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.sim-user-option {
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s;
+}
+.sim-user-option:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-label {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+  letter-spacing: 0.1em;
+}
+
+.form-select {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  background: #060608;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: white;
+}
+

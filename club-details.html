@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club Details | LittleBits</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animation.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .club-banner {
+      height: 288px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 10;
+    }
+    .club-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) brightness(0.4) contrast(1.25);
+    }
+    .back-btn {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      z-index: 20;
+      padding: 8px 16px;
+      background: rgba(6, 6, 8, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .profile-header-container {
+      position: relative;
+      margin-top: -48px;
+      z-index: 20;
+      margin-bottom: 48px;
+    }
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    @media (min-width: 768px) {
+      .profile-header { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+    }
+    .logo-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-size-adjust: auto;
+      font-size: 48px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .tabs-row {
+      display: flex;
+      gap: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 12px;
+      margin-bottom: 48px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--color-gray-500);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      position: relative;
+      padding-bottom: 12px;
+    }
+    .tab-btn.active {
+      color: white;
+    }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -13px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: white;
+    }
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    @media (min-width: 992px) {
+      .details-grid { grid-template-columns: 2fr 1fr; }
+    }
+    .details-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .sidebar-panel {
+      padding: 24px;
+      border-radius: 16px;
+    }
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+    .spec-item:last-child {
+      border: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .event-preview-card {
+      padding: 16px;
+      border-radius: 12px;
+      display: flex;
+      gap: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .activity-card {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .member-card {
+      padding: 16px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar Placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Club Banner -->
+  <div class="club-banner">
+    <img id="club-banner-img" src="" alt="Club banner" class="club-banner-img" />
+    <a href="clubs.html" class="back-btn"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> Back</a>
+  </div>
+
+  <!-- Main Details Page -->
+  <main class="container profile-header-container">
+    <!-- Header banner -->
+    <div class="profile-header">
+      <div style="display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+        <div id="club-logo-placeholder" class="logo-avatar glass-panel"></div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <span id="club-category-label" class="stat-label font-display" style="font-weight: bold; color: var(--color-gray-500);">... Group</span>
+          <h1 id="club-name-label" class="font-editorial text-white" style="font-size: 40px; font-weight: bold;">...</h1>
+          <div class="font-display" style="display: flex; gap: 24px; font-size: 10px; color: var(--color-gray-500); font-weight: bold; text-transform: uppercase;">
+            <span id="club-members-count-label">0 Members</span>
+            <span id="club-events-count-label">0 Events Scheduled</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="join-club-action-btn" class="btn-white rounded-lg">Join Chapter</button>
+    </div>
+
+    <!-- Tabs row -->
+    <div class="tabs-row font-display">
+      <button class="tab-btn active" data-tab="overview">Overview</button>
+      <button class="tab-btn" data-tab="timeline">Timeline</button>
+      <button class="tab-btn" data-tab="activities">Activities</button>
+      <button class="tab-btn" data-tab="members">Members</button>
+    </div>
+
+    <!-- Main split layout -->
+    <div class="details-grid">
+      <!-- Dynamic Panel Container -->
+      <div id="panel-content-placeholder">
+        <!-- Injected via club-details.js -->
+      </div>
+
+      <!-- Static Sidebar specs -->
+      <div class="details-sidebar">
+        <!-- Specs -->
+        <div class="sidebar-panel glass-panel shadow-xl">
+          <h3 class="stat-label font-display" style="font-weight: bold; margin-bottom: 20px;">Operational Specs</h3>
+          <div class="spec-item font-display">
+            <span style="color: var(--color-gray-500);">Chapter Level</span>
+            <span class="text-white font-semibold uppercase" style="font-size: 10px; font-weight: bold;">Division I</span>
+          </div>
+          <div class="spec-item">
+            <span style="color: var(--color-gray-500);">Meetings</span>
+            <span class="text-white font-semibold">Bi-Weekly</span>
+          </div>
+          <div class="spec-item">
+            <span style="color: var(--color-gray-500);">Affiliation</span>
+            <span class="text-white font-semibold">Dean of Research</span>
+          </div>
+        </div>
+
+        <!-- Resources -->
+        <div class="sidebar-panel glass-panel shadow-xl">
+          <h3 class="stat-label font-display" style="font-weight: bold; margin-bottom: 20px;">Resources</h3>
+          <a href="#" class="spec-item glass-btn" style="padding: 12px; border-radius: 12px; text-decoration: none; width: 100%;">
+            <span class="font-display font-bold uppercase" style="font-size: 9px; flex: 1; text-align: left;">Roster Directory</span>
+            <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Join Action -->
+    <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 32px; margin-top: 48px; text-align: center;">
+      <button id="join-club-bottom-btn" class="btn-white rounded-lg font-display font-bold uppercase" style="padding: 16px 40px; font-size: 12px; letter-spacing: 0.1em; width: 100%; max-width: 320px;">Join Chapter</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="container flex-between text-xs text-gray">
+    <div>LITTLE<span class="text-white">BITS</span></div>
+    <div>© 2026 LittleBits Chapters. All rights reserved.</div>
+  </footer>
+
+  <!-- Mock Database & Shared Controllers -->
+  <script src="js/db.js"></script>
+  <script src="js/db2.js"></script>
+  <script src="js/background.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/navbar2.js"></script>
+  
+  <!-- Page Logic -->
+  <script src="js/club-details.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
