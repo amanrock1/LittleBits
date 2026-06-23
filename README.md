@@ -8,7 +8,6 @@ This project is built using vanilla **HTML5**, **CSS3**, and **ES6 JavaScript**,
 
 ## ⚡ Core Features & Resolved Fixes
 
-Over the course of development, the codebase has been refined to look, feel, and function like a premium, human-written application. Below is a breakdown of the implemented features and the issues that were resolved along the way.
 
 ### 1. Unified Architecture & Clean File Splitting
 To keep files concise and maintainable, key modules are split into a clean two-part structure:
