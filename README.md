@@ -2,6 +2,8 @@
 
 A clean, interactive, and premium portal built for college students to discover campus clubs, RSVP to upcoming workshops, track events, manage activity passes, and access administrative consoles.
 
+**Live Demo:** https://littlebitsclub.netlify.app/
+
 This project is built using vanilla **HTML5**, **CSS3**, and **ES6 JavaScript**, with a focus on rich frosted-glass aesthetics, micro-interactions, responsive grids, and a lightweight feel — no frameworks, no build step.
 
 ---
@@ -69,7 +71,7 @@ To keep files concise and maintainable, key modules are split into a clean two-p
 
 ---
 
-## 💻 Running the Project Locally
+##  Running the Project Locally
 
 This is a lightweight static site — no package managers or bundlers required.
 
@@ -114,3 +116,14 @@ LittleBits/
 │   └── admin2.js       # Admin tabs, verification, rosters
 └── ...
 ```
+
+---
+
+##  Authors
+
+| Name | GitHub | LinkedIn |
+|--------|--------|----------|
+| **Aman Prabhat** | https://github.com/amanrock1 | https://www.linkedin.com/in/aman-prabhat-b75735325/ |
+| **Shoubhik Bhattacharya** | https://github.com/Shoubhik95 | https://www.linkedin.com/in/shoubhik-bhattacharya-8b4099324/ |
+
+---
